@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './styles/Reset.css';
+import './styles/App.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Review from './pages/Review';
+import MapTest from './pages/MapTest';
+import Map from './pages/Map';
+declare global {
+    interface Window {
+        naver: any;
+    }
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className='App'>
+                <Header />
+                <body>
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/Home' element={<Home />} />
+                        <Route path='/Review' element={<Review />} />
+                        <Route path='/Map' element={<MapTest />} />
+                        <Route path='/getMap' element={<Map />} />
+                    </Routes>
+                </body>
+                <Footer />
+                {/* <MapTest /> */}
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

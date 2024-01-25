@@ -1,0 +1,83 @@
+.Review {
+    margin: 0 var(--pc-display-side-margin);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+}
+.Review > .info {
+    margin-bottom: 20px;
+    font-family: var(--font-gugi);
+}
+
+/* review 작성 */
+.Review .ReviewEdit {
+    width: 80%;
+    max-width: 1200px;
+    font-size: 18px;
+}
+.Review .ReviewEdit .item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.Review .ReviewEdit .item.button {
+    display: flex;
+    justify-content: end;
+}
+.Review .ReviewEdit .item .title {
+    width: 100px;
+    font-family: var(--font-gugi);
+    font-weight: bold;
+}
+.Review .ReviewEdit .item textarea {
+    width: calc(100% - 100px);
+}
+.Review .ReviewEdit .item .star_area span {
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+/* review 리스트 */
+.Review .ReviewItem {
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+    font-size: 18px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+.Review .ReviewItem .control_menu {
+    display: flex;
+    justify-content: end;
+    margin: 20px 0;
+}
+.Review .ReviewItem .control_menu select {
+    padding: 5px 2px;
+    border: none;
+    border-radius: 5px;
+    font-family: var(--font-gugi);
+}
+.Review .ReviewItem .list .container {
+    padding: 20px 0;
+}
+.Review .ReviewItem .list .container:not(:last-child) {
+    border-bottom: 1px solid #fff;
+}
+.Review .ReviewItem .list .container .info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.Review .ReviewItem .list .container .nick {
+    font-weight: bold;
+}
+.Review .ReviewItem .list .container .date {
+    font-size: 15px;
+}
+.Review .ReviewItem .list .container .star {
+    margin-bottom: 5px;
+}
+.Review .ReviewItem .list .container .content {
+    white-space: pre-line;
+}
