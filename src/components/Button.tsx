@@ -7,7 +7,7 @@ interface buttonProps {
 }
 
 const Button = (props: buttonProps) => {
-    const btnType = ['positive', 'navative'].includes(props.type)
+    const btnType = ['positive', 'negative'].includes(props.type)
         ? props.type
         : 'default';
 

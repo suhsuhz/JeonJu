@@ -1,13 +1,27 @@
-import React, { useState, memo, Dispatch, SetStateAction } from 'react';
+import React, {
+    useState,
+    memo,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+} from 'react';
 import { ReviewContent } from '../../types';
+import { setDateToLocalDate } from '../../util/date';
+import ReviewEdit from './ReviewEdit';
+import Button from '../Button';
+import { useReviewDispatch } from '../../pages/Review';
+import { STAR_IMAGE } from '../../util/constants';
 
-interface Props extends ReviewContent {}
+interface Props extends ReviewContent {
+    isEditable?: boolean;
+}
 
-// 정렬
+// 정렬 option interface
 interface sortProps {
     value: string;
     name: string;
 }
+
 const sortOptionList: sortProps[] = [
     { value: 'latest', name: '최신순' },
     { value: 'oldest', name: '오래된순' },
@@ -30,7 +44,9 @@ const ControlMenu: React.FC<controlMenuProps> = memo((controlMenuProp) => {
             }
         >
             {sortOptionList.map((item, idx) => (
-                <option value={item.value}>{item.name}</option>
+                <option key={idx} value={item.value}>
+                    {item.name}
+                </option>
             ))}
         </select>
     );
@@ -38,12 +54,24 @@ const ControlMenu: React.FC<controlMenuProps> = memo((controlMenuProp) => {
 
 const ReviewItem = (props: Props[]) => {
     const [sortType, setSortType] = useState('latest');
+    const dispatch = useReviewDispatch();
 
     const copyList = Array.from(Object.values(props)); // 배열 복사
+    const [items, setItems] = useState(copyList);
 
+    useEffect(() => {
+        // mount
+        GetProcessedReviewList();
+    }, []);
+
+    useEffect(() => {
+        // update
+        GetProcessedReviewList();
+    }, [props, sortType]);
+
+    // 리뷰 리스트 정렬
     const GetProcessedReviewList = () => {
         const compare = (a: Props, b: Props) => {
-            console.log(a, b);
             if (!a.date || !b.date || !a.grade || !b.grade) return 0;
             switch (sortType) {
                 case 'oldest':
@@ -59,40 +87,128 @@ const ReviewItem = (props: Props[]) => {
             }
         };
 
-        return copyList.sort(compare);
+        /* const newProps = items.map((item) => ({ ...item, isEditable: false }));
+        console.log(newProps);
+        setItems(newProps.sort(compare)); */
+        setItems(copyList.sort(compare));
     };
 
-    const setDateToLocalDate = (date: number) => {
-        return `${new Date(date).toLocaleDateString()} ${new Date(
-            date
-        ).toLocaleTimeString()}`;
+    // 추천 점수 별점으로 보여주기
+    const setGradeToStar = (grade: number | undefined) => {
+        if (!grade) return [];
+        const array = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= grade) {
+                array.push(STAR_IMAGE.on);
+            } else {
+                array.push(STAR_IMAGE.off);
+            }
+        }
+        return array;
     };
+
+    // 삭제
+    const handleDelete = (id: number, password: string) => {
+        const inputPassword = prompt('비밀번호를 입력해주세요', '');
+        if (password !== inputPassword) {
+            alert('틀린 비밀번호입니다.');
+            return;
+        }
+
+        dispatch.onDelete(id);
+    };
+
+    // 수정
+    const handleFormChange = (id: number) => {
+        const inputPassword = prompt('비밀번호를 입력해주세요', '');
+
+        //const isEditable = inputPassword === props[].password;
+        const editItem = items.filter(
+            (item) => item.id === id && inputPassword === item.password
+        );
+        if (editItem.length < 1) {
+            alert('틀린 비밀번호입니다.');
+            return;
+        }
+
+        const newProps = items.map((item) =>
+            item.id === id
+                ? { ...item, isEditable: true }
+                : { ...item, isEditable: false }
+        );
+        setItems(newProps);
+    };
+
     return (
         <section className='ReviewItem'>
             {Object.keys(props).length !== 0 ? ( // 값이 있을때만항목이 보임
-                <React.Fragment>
+                <div className='container'>
                     <div className='control_menu'>
                         <ControlMenu value={sortType} onChange={setSortType} />
                     </div>
                     <div className='list'>
-                        {GetProcessedReviewList().map((review: Props) => (
-                            <div className='container'>
-                                <div className='info'>
-                                    <span className='nick'>{review.nick}</span>
-                                    <span className='date'>
-                                        {setDateToLocalDate(review.date)}
-                                    </span>
-                                </div>
-                                <div className='star'>
-                                    <span>{review.grade}</span>
-                                </div>
-                                <div className='content'>
-                                    <p>{review.content}</p>
-                                </div>
+                        {items.map((review, index) => (
+                            <div key={index} className='item'>
+                                {!review.isEditable ? (
+                                    <>
+                                        <div className='top'>
+                                            <span className='nick'>
+                                                {review.nick}
+                                            </span>
+                                            <span className='date'>
+                                                {setDateToLocalDate(
+                                                    review.date
+                                                )}
+                                            </span>
+                                        </div>
+                                        <div className='middle'>
+                                            <span>
+                                                {setGradeToStar(
+                                                    review.grade
+                                                )?.map((item, index) => (
+                                                    <img
+                                                        key={index}
+                                                        src={item}
+                                                        alt='별'
+                                                    />
+                                                ))}
+                                            </span>
+                                            <span>
+                                                <Button
+                                                    type={'positive'}
+                                                    text={'수정하기'}
+                                                    onClick={() =>
+                                                        handleFormChange(
+                                                            review.id
+                                                        )
+                                                    }
+                                                />
+                                                <Button
+                                                    type={'negative'}
+                                                    text={'삭제하기'}
+                                                    onClick={() =>
+                                                        handleDelete(
+                                                            review.id,
+                                                            review.password
+                                                        )
+                                                    }
+                                                />
+                                            </span>
+                                        </div>
+                                        <div className='botton'>
+                                            <p>{review.content}</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <ReviewEdit
+                                        isEdit={true}
+                                        originalData={review}
+                                    />
+                                )}
                             </div>
                         ))}
                     </div>
-                </React.Fragment>
+                </div>
             ) : (
                 <div></div>
             )}

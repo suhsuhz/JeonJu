@@ -1,10 +1,8 @@
 import { useRef, useEffect, useMemo } from 'react';
 import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Autoplay, SwiperOptions } from 'swiper';
+import Swiper from 'swiper';
 import 'swiper/css';
 import '../styles/Home.css';
-
-SwiperCore.use([Autoplay]);
 
 interface itemsProps {
     src: string;
@@ -27,7 +25,7 @@ const items: itemsProps[] = [
 ];
 
 const Home = () => {
-    const swiperCoreRef = useRef<SwiperCore>(null);
+    const swiperCoreRef = useRef<Swiper>(null);
 
     useEffect(() => {
         const swiper = swiperCoreRef.current;
@@ -40,7 +38,7 @@ const Home = () => {
     }, []);
 
     // swiper 옵션 세팅
-    const settings = useMemo<SwiperOptions>(
+    const settings = useMemo(
         () => ({
             loop: true,
             slidesPerView: 1,
@@ -56,7 +54,6 @@ const Home = () => {
                     slidesPerView: 3,
                 },
             },
-            modules: [Autoplay],
         }),
         []
     );

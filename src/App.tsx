@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
             <div className='App'>
                 <Header />
-                <body>
+                <div className='body'>
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/Home' element={<Home />} />
@@ -28,7 +28,7 @@ function App() {
                         <Route path='/Map' element={<MapTest />} />
                         <Route path='/getMap' element={<Map />} />
                     </Routes>
-                </body>
+                </div>
                 <Footer />
                 {/* <MapTest /> */}
             </div>

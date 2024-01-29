@@ -14,10 +14,10 @@ button:hover {
     cursor: pointer;
 }
 button.button_positive {
-    background-color: green;
+    background-color: rgb(15, 133, 15);
 }
 button.button_negative {
-    background-color: red;
+    background-color: #f74023;
 }
 button.button_default {
     background-color: orange;

@@ -42,8 +42,10 @@
 .Review .ReviewItem {
     width: 80%;
     max-width: 1200px;
-    padding: 20px;
     font-size: 18px;
+}
+.Review .ReviewItem .container {
+    padding: 20px;
     border: 1px solid #fff;
     border-radius: 5px;
 }
@@ -58,26 +60,34 @@
     border-radius: 5px;
     font-family: var(--font-gugi);
 }
-.Review .ReviewItem .list .container {
+.Review .ReviewItem .list .item {
     padding: 20px 0;
 }
-.Review .ReviewItem .list .container:not(:last-child) {
+.Review .ReviewItem .list .item:not(:last-child) {
     border-bottom: 1px solid #fff;
 }
-.Review .ReviewItem .list .container .info {
+.Review .ReviewItem .list .item .top {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
 }
-.Review .ReviewItem .list .container .nick {
+.Review .ReviewItem .list .item .nick {
     font-weight: bold;
 }
-.Review .ReviewItem .list .container .date {
+.Review .ReviewItem .list .item .date {
     font-size: 15px;
 }
-.Review .ReviewItem .list .container .star {
-    margin-bottom: 5px;
+.Review .ReviewItem .list .item .middle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
 }
-.Review .ReviewItem .list .container .content {
+.Review .ReviewItem .list .item .middle button {
+    margin-left: 3px;
+}
+.Review .ReviewItem .list .item .bottom {
     white-space: pre-line;
+    font-size: 16px;
+    line-height: 1.1;
 }

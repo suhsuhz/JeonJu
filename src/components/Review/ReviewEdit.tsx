@@ -1,8 +1,12 @@
 import React, { useRef, useState } from 'react';
 import Button from '../../components/Button';
 import { useReviewDispatch } from '../../pages/Review';
+import { STAR_IMAGE } from '../../util/constants';
+import { ReviewContent } from '../../types';
 
-const ReviewEdit = () => {
+interface Props extends ReviewContent {}
+
+const ReviewEdit = ({ isEdit = false, originalData = {} as Props }) => {
     //const dispatch = useContext(ReviewDispatchContext);
     const dispatch = useReviewDispatch();
 
@@ -11,10 +15,14 @@ const ReviewEdit = () => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
 
-    const [nick, setNick] = useState('');
-    const [password, setPassword] = useState('');
-    const [grade, setGrade] = useState<number | undefined>();
-    const [content, setContent] = useState('');
+    const [nick, setNick] = useState(isEdit ? originalData.nick : '');
+    const [password, setPassword] = useState(
+        isEdit ? originalData.password : ''
+    );
+    const [grade, setGrade] = useState<number | undefined>(
+        isEdit ? originalData.grade : undefined
+    );
+    const [content, setContent] = useState(isEdit ? originalData.content : '');
 
     // 별 기본 이미지 경로
     const star = {
@@ -25,23 +33,23 @@ const ReviewEdit = () => {
     // 별점 기본값
     const defaultStars = [
         {
-            src: star.off,
+            src: STAR_IMAGE.off,
             value: 1,
         },
         {
-            src: star.off,
+            src: STAR_IMAGE.off,
             value: 2,
         },
         {
-            src: star.off,
+            src: STAR_IMAGE.off,
             value: 3,
         },
         {
-            src: star.off,
+            src: STAR_IMAGE.off,
             value: 4,
         },
         {
-            src: star.off,
+            src: STAR_IMAGE.off,
             value: 5,
         },
     ];
@@ -54,7 +62,7 @@ const ReviewEdit = () => {
         const newStars = stars.map((item) => {
             return {
                 ...item,
-                src: item.value <= value ? star.on : star.off,
+                src: item.value <= value ? STAR_IMAGE.on : STAR_IMAGE.off,
             };
         });
         setStars(newStars);
@@ -111,7 +119,16 @@ const ReviewEdit = () => {
             return;
         }
 
-        dispatch.onCreate(nick, password, grade, content);
+        isEdit !== true
+            ? dispatch.onCreate(nick, password, grade, content)
+            : dispatch.onEdit(
+                  originalData.id,
+                  nick,
+                  password,
+                  grade,
+                  content,
+                  originalData.date
+              );
         setNick('');
         setPassword('');
         setGrade(undefined);
@@ -144,8 +161,11 @@ const ReviewEdit = () => {
             <div className='item'>
                 <span className='title'>추천</span>
                 <div className='star_area'>
-                    {stars.map((item) => (
-                        <span onClick={() => handleSetStars(item.value)}>
+                    {stars.map((item, index) => (
+                        <span
+                            key={index}
+                            onClick={() => handleSetStars(item.value)}
+                        >
                             <img src={item.src} alt='별' />
                         </span>
                     ))}
@@ -163,7 +183,7 @@ const ReviewEdit = () => {
             <div className='item button'>
                 <Button
                     type={'default'}
-                    text={'저장하기'}
+                    text={isEdit ? '수정하기' : '저장하기'}
                     onClick={() => {
                         handleSubmit();
                     }}

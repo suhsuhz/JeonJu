@@ -19,7 +19,7 @@
     --pc-display-side-margin: 30px;
 }
 
-body {
+.body {
     width: 100vw;
     min-height: calc(100dvh - 150px - 100px);
     background-color: var(--color-orange);
@@ -43,7 +43,7 @@ textarea {
     border-radius: 3px;
     padding: 10px;
     font-size: var(--text-pc-font-size);
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 input:focus,
 textarea:focus {
@@ -74,6 +74,7 @@ header {
     /* 클릭 or 드래그시 파란배경 없애기*/
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    background-color: var(--color-orange);
 }
 header .logo {
     margin: 30px var(--pc-display-side-margin);
