@@ -44,7 +44,8 @@
         ]
     },
     "devDependencies": {
-        "@types/navermaps": "^3.7.4"
+        "@types/navermaps": "^3.7.4",
+        "@types/swiper": "^6.0.0"
     },
     "proxy": "https://naveropenapi.apigw.ntruss.com"
 }

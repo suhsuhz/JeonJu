@@ -1,9 +1,9 @@
 import { useRef, useEffect, useMemo } from 'react';
 import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react';
 import Swiper from 'swiper';
-import 'swiper/css';
+import 'swiper/bundle';
+import 'swiper/swiper-bundle.css';
 import '../styles/Home.css';
-
 interface itemsProps {
     src: string;
     name: string;
@@ -21,6 +21,10 @@ const items: itemsProps[] = [
     {
         src: '/assets/images/home/review.png',
         name: '전주한줄',
+    },
+    {
+        src: '/assets/images/home/public.png',
+        name: '전주공식사이트',
     },
 ];
 
@@ -47,7 +51,7 @@ const Home = () => {
             spaceBetween: 30,
             grabCursor: true,
             autoplay: {
-                delay: 4000,
+                delay: 2000,
             },
             breakpoints: {
                 970: {
