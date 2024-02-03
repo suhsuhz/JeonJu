@@ -195,7 +195,7 @@ const ReviewItem = (props: Props[]) => {
                                                 />
                                             </span>
                                         </div>
-                                        <div className='botton'>
+                                        <div className='bottom'>
                                             <p>{review.content}</p>
                                         </div>
                                     </>

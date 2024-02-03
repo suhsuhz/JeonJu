@@ -96,3 +96,29 @@
     overflow: hidden;
     margin-top: 10px;
 }
+
+/* Mobile */
+@media screen and (max-width: 970px) {
+    .body {
+        overflow-y: auto;
+    }
+    .Food .FoodItem {
+        flex-direction: column;
+    }
+
+    .Food .FoodItem .image_area {
+        width: 100%;
+        background: none;
+    }
+    .Food .FoodItem .image_area .image {
+        position: inherit;
+    }
+    .Food .FoodItem .content_area {
+        width: 100%;
+    }
+
+    .Food .dot_area {
+        position: fixed;
+        top: 0;
+    }
+}

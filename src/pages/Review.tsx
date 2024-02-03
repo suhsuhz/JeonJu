@@ -55,7 +55,7 @@ export const ReviewDispatchContext = React.createContext<{
 
 export function useReviewDispatch() {
     const dispatch = useContext(ReviewDispatchContext);
-    if (!dispatch) throw new Error('ReviewDispatchContext에 문제가 있다'); // null 타입일 때 대비
+    if (!dispatch) throw new Error('ReviewDispatchContext error'); // null 타입일 때 대비
     return dispatch;
 }
 
@@ -121,6 +121,7 @@ const Review = () => {
             <div className='info'>
                 <h1>전주를 다녀오셨나요?</h1>
                 <h2>어땠는지 한줄로 평가를 남겨주세요</h2>
+                (데이터는 저장되지 않으며, 페이지 이동시 사라집니다)
             </div>
             <ReviewStateContext.Provider value={datas}>
                 <ReviewDispatchContext.Provider

@@ -91,3 +91,41 @@
     font-size: 16px;
     line-height: 1.1;
 }
+
+/* Mobile */
+@media screen and (max-width: 970px) {
+    .Review .ReviewEdit {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .Review .ReviewEdit .item {
+        text-align: left;
+    }
+    .Review .ReviewEdit .item .title {
+        width: 80px;
+    }
+    .Review .ReviewEdit .item input,
+    .Review .ReviewEdit .item textarea {
+        width: calc(100% - 80px);
+    }
+    .Review .ReviewEdit .item.button {
+        justify-content: center;
+    }
+    .Review .ReviewEdit .item.button .button {
+        width: 100%;
+    }
+
+    .Review .ReviewItem {
+        width: 100%;
+    }
+    .Review .ReviewItem .list .item .middle img {
+        width: 18px;
+        height: 18px;
+    }
+    .Review .ReviewItem .list .item .middle button {
+        font-size: 12px;
+    }
+    .Review .ReviewItem .list .item .bottom {
+        text-align: left;
+    }
+}

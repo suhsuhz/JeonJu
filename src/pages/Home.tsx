@@ -1,4 +1,5 @@
 import { useRef, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react';
 import Swiper from 'swiper';
 import 'swiper/bundle';
@@ -7,24 +8,44 @@ import '../styles/Home.css';
 interface itemsProps {
     src: string;
     name: string;
+    link: {
+        externalLink: boolean;
+        src: string;
+    };
 }
 
 const items: itemsProps[] = [
     {
         src: '/assets/images/home/food.png',
         name: '먹거리',
+        link: {
+            externalLink: false,
+            src: '/Food',
+        },
     },
     {
         src: '/assets/images/home/play.png',
         name: '놀거리',
+        link: {
+            externalLink: false,
+            src: '',
+        },
     },
     {
         src: '/assets/images/home/review.png',
         name: '전주한줄',
+        link: {
+            externalLink: false,
+            src: '/Review',
+        },
     },
     {
         src: '/assets/images/home/public.png',
         name: '전주공식사이트',
+        link: {
+            externalLink: true,
+            src: 'https://www.jeonju.go.kr/main/index.jsp',
+        },
     },
 ];
 
@@ -68,12 +89,25 @@ const Home = () => {
                 <SwiperReact {...settings}>
                     {items.map((item, index) => (
                         <SwiperSlide key={index}>
-                            <div className='home_slide'>
-                                <img src={item.src} alt={item.name} />
-                                <div className='home_slide_text'>
-                                    {item.name}
-                                </div>
-                            </div>
+                            {item.link.externalLink ? (
+                                <a href={item.link.src} target='_blank'>
+                                    <div className='home_slide'>
+                                        <img src={item.src} alt={item.name} />
+                                        <div className='home_slide_text'>
+                                            {item.name}
+                                        </div>
+                                    </div>
+                                </a>
+                            ) : (
+                                <Link to={item.link.src}>
+                                    <div className='home_slide'>
+                                        <img src={item.src} alt={item.name} />
+                                        <div className='home_slide_text'>
+                                            {item.name}
+                                        </div>
+                                    </div>
+                                </Link>
+                            )}
                         </SwiperSlide>
                     ))}
                 </SwiperReact>

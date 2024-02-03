@@ -22,6 +22,9 @@ const Food = () => {
             handelScroll(event);
         };
 
+        // 모바일화면은 wheel이벤트 막기
+        if (window.matchMedia('(max-width: 970px)').matches) return;
+
         // 마운트시 이벤트 추가
         window.addEventListener('wheel', scrollHandler);
         // 언마운트시 이벤트 제거
