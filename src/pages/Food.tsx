@@ -1,12 +1,42 @@
 import '../styles/Food.css';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FoodItemsProp } from '../types';
 import FoodItem from '../components/Food/FoodItem';
 
 const Food = () => {
-    const [activeItemIndex, setActiveItemIndex] = useState(2);
-    //const;
+    // 현재 나타나는 아이템 index
+    const [activeItemIndex, setActiveItemIndex] = useState(0);
 
+    const handelScroll = (event: WheelEvent) => {
+        const deltaY = event.deltaY;
+
+        let activeNumber = activeItemIndex;
+        deltaY > 0 ? activeNumber++ : activeNumber--;
+        if (activeNumber > items.length - 1 || activeNumber < 0) return;
+        handleActiveItemIndex(activeNumber);
+    };
+
+    // wheel 이벤트 감지
+    useEffect(() => {
+        const scrollHandler = (event: WheelEvent) => {
+            handelScroll(event);
+        };
+
+        // 마운트시 이벤트 추가
+        window.addEventListener('wheel', scrollHandler);
+        // 언마운트시 이벤트 제거
+        return () => {
+            window.removeEventListener('wheel', scrollHandler);
+        };
+    }, [activeItemIndex]);
+
+    // 클릭할때 마다 다음 item으로 넘어가기
+    const handleActiveItemIndex = (clickIndex: number) => {
+        if (clickIndex > items.length - 1 || clickIndex < 0) return;
+        setActiveItemIndex(clickIndex);
+    };
+
+    // 음식 데이터
     const items: FoodItemsProp[] = [
         {
             name: '카페 올드브릭',
@@ -49,6 +79,18 @@ const Food = () => {
     return (
         <div className='Food'>
             <FoodItem {...items[activeItemIndex]} />
+            <div className='dot_area'>
+                {items.map((item, index) => (
+                    <span
+                        className={[
+                            'dot',
+                            activeItemIndex === index ? 'active' : '',
+                        ].join(' ')}
+                        key={index}
+                        onClick={() => handleActiveItemIndex(index)}
+                    ></span>
+                ))}
+            </div>
         </div>
     );
 };

@@ -2,6 +2,14 @@ import { FoodItemsProp } from '../../types';
 import NaverMapApi from '../NaverMapApi';
 
 const FoodItem = (item: FoodItemsProp) => {
+    /* useEffect(() => {
+        setAddress(mapAddress);
+        return () => {
+            console.log(mapAddress);
+            handdleAddressChange();
+        };
+    }, [item]); */
+
     return (
         <div className='FoodItem'>
             <section className='image_area'>

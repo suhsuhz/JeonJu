@@ -3,12 +3,40 @@
     overflow-y: hidden;
 }
 .Food {
+    position: relative;
     display: inline-flex;
     justify-content: center;
     width: 100%;
     max-width: 1200px;
+    height: 400px;
     background-color: rgb(248, 210, 128);
 }
+.Food .dot_area {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+.Food .dot_area .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.Food .dot_area .dot.active {
+    /* background-color: var(--color-orange); */
+    width: 15px;
+    height: 15px;
+}
+.Food .dot_area .dot:not(:last-child) {
+    margin-bottom: 15px;
+}
+
 .Food .FoodItem {
     display: flex;
     justify-content: space-between;

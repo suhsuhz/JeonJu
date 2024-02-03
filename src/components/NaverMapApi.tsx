@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 import '../styles/NaverMap.css';
 
@@ -11,23 +11,21 @@ interface MapProps {
 }
 
 const NaverMapApi = ({ mapAddress }: MapProps) => {
+    useEffect(() => {
+        handdleAddressChange();
+    }, [mapAddress]);
+
     const navermaps = useNavermaps();
-    const [address, setAddress] = useState(mapAddress);
     const [coordinates, setCoordinates] = useState({
         latitude: 0,
         longitude: 0,
     });
 
-    useEffect(() => {
-        console.log(mapAddress);
-        handdleAddressChange();
-    }, []);
-
     // 주소를 x,y좌표로 변경하기
     const handdleAddressChange = async () => {
         const geocoder = navermaps.Service.geocode(
             {
-                query: address,
+                query: mapAddress,
             },
             function (status, response) {
                 if (status !== navermaps.Service.Status.OK) {
