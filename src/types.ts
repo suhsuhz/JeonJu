@@ -7,3 +7,17 @@ export interface ReviewContent {
     content: string;
     date: number;
 }
+
+/** Food **/
+export interface FoodItemsProp {
+    name: string;
+    content: {
+        tel: string;
+        desc: string;
+    };
+    image: {
+        src: string;
+        alt: string;
+    };
+    address: string;
+}

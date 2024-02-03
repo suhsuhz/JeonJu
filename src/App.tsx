@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Review from './pages/Review';
+import Food from './pages/Food';
 import MapTest from './pages/MapTest';
 import Map from './pages/Map';
 declare global {
@@ -25,7 +26,8 @@ function App() {
                         <Route path='/' element={<Home />} />
                         <Route path='/Home' element={<Home />} />
                         <Route path='/Review' element={<Review />} />
-                        <Route path='/Map' element={<MapTest />} />
+                        <Route path='/Food' element={<Food />} />
+                        <Route path='/MapTest' element={<MapTest />} />
                         <Route path='/getMap' element={<Map />} />
                     </Routes>
                 </div>
